@@ -1,0 +1,10 @@
+C:\Users\juven\source\repos\AppGetInfo\AppGetInfo\bin\Release\AppGetInfo.exe.config
+C:\Users\juven\source\repos\AppGetInfo\AppGetInfo\bin\Release\AppGetInfo.exe
+C:\Users\juven\source\repos\AppGetInfo\AppGetInfo\bin\Release\AppGetInfo.pdb
+C:\Users\juven\source\repos\AppGetInfo\AppGetInfo\obj\Release\AppGetInfo.FormAppGetInfo.resources
+C:\Users\juven\source\repos\AppGetInfo\AppGetInfo\obj\Release\AppGetInfo.Properties.Resources.resources
+C:\Users\juven\source\repos\AppGetInfo\AppGetInfo\obj\Release\AppGetInfo.csproj.GenerateResource.cache
+C:\Users\juven\source\repos\AppGetInfo\AppGetInfo\obj\Release\AppGetInfo.csproj.CoreCompileInputs.cache
+C:\Users\juven\source\repos\AppGetInfo\AppGetInfo\obj\Release\AppGetInfo.exe
+C:\Users\juven\source\repos\AppGetInfo\AppGetInfo\obj\Release\AppGetInfo.pdb
+C:\Users\juven\source\repos\AppGetInfo\AppGetInfo\obj\Release\AppGetInfo.csproj.AssemblyReference.cache

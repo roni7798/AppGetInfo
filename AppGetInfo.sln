@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31410.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppGetInfo", "AppGetInfo\AppGetInfo.csproj", "{4EC5D344-D5E4-4B4B-80CE-C09D1DDD3836}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AppGetInfoSetup", "AppGetInfoSetup\AppGetInfoSetup.vdproj", "{5DFD7290-DC76-4289-839B-720BC1479885}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4EC5D344-D5E4-4B4B-80CE-C09D1DDD3836}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EC5D344-D5E4-4B4B-80CE-C09D1DDD3836}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EC5D344-D5E4-4B4B-80CE-C09D1DDD3836}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EC5D344-D5E4-4B4B-80CE-C09D1DDD3836}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DFD7290-DC76-4289-839B-720BC1479885}.Debug|Any CPU.ActiveCfg = Debug
+		{5DFD7290-DC76-4289-839B-720BC1479885}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AB354DB4-76BC-4094-BDCF-4F99F9CDC7EF}
+	EndGlobalSection
+EndGlobal
