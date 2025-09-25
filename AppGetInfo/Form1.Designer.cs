@@ -1,5 +1,4 @@
-﻿
-namespace AppGetInfo
+﻿namespace AppGetInfo
 {
     partial class FormAppGetInfo
     {
@@ -49,6 +48,7 @@ namespace AppGetInfo
             this.txtSO = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtCantSlots = new System.Windows.Forms.TextBox();
+            this.btnExportarInfo = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblMotherBoard
@@ -223,11 +223,22 @@ namespace AppGetInfo
             this.txtCantSlots.Size = new System.Drawing.Size(150, 20);
             this.txtCantSlots.TabIndex = 18;
             // 
+            // btnExportarInfo
+            // 
+            this.btnExportarInfo.Location = new System.Drawing.Point(320, 394);
+            this.btnExportarInfo.Name = "btnExportarInfo";
+            this.btnExportarInfo.Size = new System.Drawing.Size(125, 23);
+            this.btnExportarInfo.TabIndex = 19;
+            this.btnExportarInfo.Text = "Exportar Información";
+            this.btnExportarInfo.UseVisualStyleBackColor = true;
+            this.btnExportarInfo.Click += new System.EventHandler(this.btnExportarInfo_Click);
+            // 
             // FormAppGetInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(688, 442);
+            this.Controls.Add(this.btnExportarInfo);
             this.Controls.Add(this.txtCantSlots);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtSO);
@@ -277,6 +288,7 @@ namespace AppGetInfo
         private System.Windows.Forms.TextBox txtSO;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtCantSlots;
+        private System.Windows.Forms.Button btnExportarInfo;
     }
 }
 

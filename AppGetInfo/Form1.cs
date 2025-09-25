@@ -42,8 +42,8 @@ namespace AppGetInfo
                 try
                 {
                     motherboard = mo.GetPropertyValue("SerialNumber").ToString()
-                + " - " + mo.GetPropertyValue("Manufacturer").ToString()
-                + " - " + mo.GetPropertyValue("Product").ToString();
+                + " | " + mo.GetPropertyValue("Manufacturer").ToString()
+                + " | " + mo.GetPropertyValue("Product").ToString();
                 }
                 catch
                 { }
@@ -58,7 +58,7 @@ namespace AppGetInfo
 
             foreach (ManagementObject obj in myVideoObject.Get())
             {
-                grafica = obj["DriverVersion"] + " - " + obj["Name"] + " - " + obj["VideoProcessor"];
+                grafica = obj["DriverVersion"] + " | " + obj["Name"] + " | " + obj["VideoProcessor"];
             }
             return grafica;
         }
@@ -78,20 +78,40 @@ namespace AppGetInfo
 
         public string ObtenerInformacionTipoRAM()
         {
-                int type = 0;
-
-                ConnectionOptions connection = new ConnectionOptions();
-                connection.Impersonation = ImpersonationLevel.Impersonate;
-                ManagementScope scope = new ManagementScope("\\\\.\\root\\CIMV2", connection);
-                scope.Connect();
-                ObjectQuery query = new ObjectQuery("SELECT * FROM Win32_PhysicalMemory");
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher(scope, query);
-                foreach (ManagementObject queryObj in searcher.Get())
+            int type = 0;
+            int smbiosType = 0;
+            bool found = false;
+            // Usar la ruta correcta para ManagementScope
+            ManagementScope scope = new ManagementScope("root\\CIMV2");
+            scope.Connect();
+            ObjectQuery query = new ObjectQuery("SELECT * FROM Win32_PhysicalMemory");
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher(scope, query);
+            foreach (ManagementObject queryObj in searcher.Get())
+            {
+                if (queryObj["SMBIOSMemoryType"] != null)
+                {
+                    smbiosType = Convert.ToInt32(queryObj["SMBIOSMemoryType"]);
+                    found = true;
+                    break;
+                }
+                else if (queryObj["MemoryType"] != null)
                 {
                     type = Convert.ToInt32(queryObj["MemoryType"]);
+                    found = true;
+                    break;
                 }
-
-                return TypeString(type);
+            }
+            if (found)
+            {
+                if (smbiosType != 0)
+                    return TypeString(smbiosType);
+                else
+                    return TypeString(type);
+            }
+            else
+            {
+                return "No disponible";
+            }
         }
 
         private static string TypeString(int type)
@@ -174,15 +194,9 @@ namespace AppGetInfo
 
             foreach (DriveInfo d in allDrives)
             {
-                disco += "------------------------------";
-                disco += "\r\nDisco: " + d.Name;
                 if (d.IsReady == true)
                 {
-                    disco += "\r\nFormato: " + d.DriveFormat;
-                    disco += "\r\nEspacio Disponible: " + FormatBytes(d.TotalFreeSpace);
-                    disco += "\r\nEspacio Utilizado: " + FormatBytes(d.TotalSize - d.TotalFreeSpace);
-                    disco += "\r\nEspacio Total: " + FormatBytes(d.TotalSize);
-                    disco += "\r\n------------------------------";
+                    disco += $"Disco: {d.Name} | Formato: {d.DriveFormat} | Espacio Disponible: {FormatBytes(d.TotalFreeSpace)} | Espacio Utilizado: {FormatBytes(d.TotalSize - d.TotalFreeSpace)} | Espacio Total: {FormatBytes(d.TotalSize)}\r\n";
                 }
             }
             return disco;
@@ -213,6 +227,121 @@ namespace AppGetInfo
             return so;
         }
 
+        public string ObtenerInformacionTipoDisco(DriveInfo d)
+        {
+            try
+            {
+                var searcher = new ManagementObjectSearcher($"SELECT * FROM Win32_DiskDrive WHERE Index = {d.Name.Replace(":\\","")}");
+                foreach (ManagementObject obj in searcher.Get())
+                {
+                    var mediaType = obj["MediaType"]?.ToString();
+                    if (mediaType != null && mediaType.ToLower().Contains("ssd"))
+                        return "SSD";
+                    else if (mediaType != null && mediaType.ToLower().Contains("hdd"))
+                        return "HDD";
+                }
+            }
+            catch { }
+            return "Desconocido";
+        }
+
+        public string ObtenerInformacionRed()
+        {
+            StringBuilder sb = new StringBuilder();
+            try
+            {
+                var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_NetworkAdapterConfiguration WHERE IPEnabled = True");
+                foreach (ManagementObject obj in searcher.Get())
+                {
+                    sb.AppendLine($"Adaptador: {obj["Description"]} | IP: {((string[])(obj["IPAddress"]))[0]}");
+                }
+            }
+            catch (Exception ex)
+            {
+                sb.AppendLine($"Error obteniendo red: {ex.Message}");
+            }
+            return sb.ToString();
+        }
+
+        public string ObtenerInformacionUsuario()
+        {
+            try
+            {
+                string usuario = Environment.UserName;
+                string dominio = Environment.UserDomainName;
+                string host = Environment.MachineName;
+                return $"Usuario: {usuario} | Dominio: {dominio} | Host: {host}";
+            }
+            catch (Exception ex)
+            {
+                return $"Error obteniendo usuario: {ex.Message}";
+            }
+        }
+
+        public void ExportarInformacion(string info)
+        {
+            try
+            {
+                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "InfoPC.txt");
+                File.WriteAllText(path, info);
+                MessageBox.Show($"Información exportada a: {path}", "Exportación", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error exportando información: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public string ObtenerMarcaModeloPC()
+        {
+            try
+            {
+                var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_ComputerSystem");
+                foreach (ManagementObject obj in searcher.Get())
+                {
+                    string marca = obj["Manufacturer"]?.ToString() ?? "Desconocido";
+                    string modelo = obj["Model"]?.ToString() ?? "Desconocido";
+                    return $"Marca: {marca} | Modelo: {modelo}";
+                }
+            }
+            catch (Exception ex)
+            {
+                return $"Error obteniendo marca/modelo: {ex.Message}";
+            }
+            return "Marca/Modelo no disponible";
+        }
+
+        public string ObtenerInformacionCompleta()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(ObtenerMarcaModeloPC());
+            sb.AppendLine("Motherboard: " + ObtenerInfoMotherboard());
+            sb.AppendLine("Tarjeta Gráfica: " + ObtenerInformacionGrafica());
+            sb.AppendLine("RAM: " + ObtenerInformacionTipoRAM());
+            sb.AppendLine("Cantidad RAM: " + ObtenerInformacionCantidadRAM());
+            sb.AppendLine("Cantidad Slots: " + ObtenerInformacionCantidadSlots());
+            sb.AppendLine("Procesador: " + ObtenerInformacionProcesador());
+            sb.AppendLine("SO: " + ObtenerInformacionSO());
+            sb.AppendLine("Usuario: " + ObtenerInformacionUsuario());
+            sb.AppendLine("Red:");
+            sb.AppendLine(ObtenerInformacionRed());
+            sb.AppendLine("Almacenamiento:");
+            DriveInfo[] allDrives = DriveInfo.GetDrives();
+            foreach (DriveInfo d in allDrives)
+            {
+                if (d.IsReady)
+                {
+                    sb.AppendLine($"Disco: {d.Name} | Tipo: {ObtenerInformacionTipoDisco(d)} | Formato: {d.DriveFormat} | Espacio Disponible: {FormatBytes(d.TotalFreeSpace)} | Espacio Utilizado: {FormatBytes(d.TotalSize - d.TotalFreeSpace)} | Espacio Total: {FormatBytes(d.TotalSize)}");
+                }
+            }
+            return sb.ToString();
+        }
+
+        private void btnExportarInfo_Click(object sender, EventArgs e)
+        {
+            string info = ObtenerInformacionCompleta();
+            ExportarInformacion(info);
+        }
 
     }
 }
