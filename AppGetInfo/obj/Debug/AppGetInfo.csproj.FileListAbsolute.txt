@@ -1,9 +1,0 @@
-C:\Users\juven\source\repos\AppGetInfo\AppGetInfo\bin\Debug\AppGetInfo.exe.config
-C:\Users\juven\source\repos\AppGetInfo\AppGetInfo\bin\Debug\AppGetInfo.exe
-C:\Users\juven\source\repos\AppGetInfo\AppGetInfo\bin\Debug\AppGetInfo.pdb
-C:\Users\juven\source\repos\AppGetInfo\AppGetInfo\obj\Debug\AppGetInfo.FormAppGetInfo.resources
-C:\Users\juven\source\repos\AppGetInfo\AppGetInfo\obj\Debug\AppGetInfo.Properties.Resources.resources
-C:\Users\juven\source\repos\AppGetInfo\AppGetInfo\obj\Debug\AppGetInfo.csproj.GenerateResource.cache
-C:\Users\juven\source\repos\AppGetInfo\AppGetInfo\obj\Debug\AppGetInfo.csproj.CoreCompileInputs.cache
-C:\Users\juven\source\repos\AppGetInfo\AppGetInfo\obj\Debug\AppGetInfo.exe
-C:\Users\juven\source\repos\AppGetInfo\AppGetInfo\obj\Debug\AppGetInfo.pdb
