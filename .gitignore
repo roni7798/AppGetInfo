@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/AppGetInfo/CopilotIndices/17.14.1231.31060
+/.vs/AppGetInfo/FileContentIndex
+*.suo
+/AppGetInfo/obj/Debug/AppGetInfo.csproj.AssemblyReference.cache
+/AppGetInfo/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+/UpgradeLog.htm
